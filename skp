@@ -1,0 +1,44 @@
+#/bin/bash
+# Skype shell utility for lazy guys like you 
+#
+################################################################################################################
+send_message() {
+	local name="$1"
+	local message="$2"
+	script="tell application \"Skype\" to send command \"MESSAGE $1 $2\" script name \"msg\""
+
+	osascript -e "$script"
+}
+################################################################################################################
+get_last_active_chat() {
+
+	
+}
+get_chats() {
+
+	script="tell application \"Skype\" to send command \"SEARCH RECENTCHATS\" script name \"chats\""
+	chats=`osascript -e "$script"`
+
+}
+################################################################################################################
+# skype_command()
+# {
+# 	#
+# 	#
+# }
+
+
+#Parameters
+TO=$1
+MESSAGE=$2
+
+# Sane input parameters
+# if ["$message" == ""]; then
+# 	read MESSAGE
+# fi
+
+echo $(get_last_active_chat)
+# send_message "$TO" "$MESSAGE"
+
+exit 0
+

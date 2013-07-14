@@ -42,10 +42,11 @@ MESSAGE=$2
 # Sane input parameters
 if [[ "$TO" == "" ]]; then
 	get_last_active_chat
-	TO=`echo $LAST_CHAT`
+	TO=$LAST_CHAT
 fi
 
 if ["$MESSAGE" == ""]; then
+	echo ">"
 	read MESSAGE
 fi
 

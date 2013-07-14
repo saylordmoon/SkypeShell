@@ -2,6 +2,9 @@
 # Skype shell utility for lazy guys like you 
 #
 ################################################################################################################
+CHATS=""
+LAST_CHAT=""
+################################################################################################################
 send_message() {
 	local name="$1"
 	local message="$2"
@@ -10,16 +13,20 @@ send_message() {
 	osascript -e "$script"
 }
 ################################################################################################################
-get_last_active_chat() {
-
-	
+get_chats() 
+{
+	script="tell application \"Skype\" to send command \"SEARCH RECENTCHATS\" script name \"chts\""
+	CHATS=`osascript -e "$script"`
 }
-get_chats() {
-
-	script="tell application \"Skype\" to send command \"SEARCH RECENTCHATS\" script name \"chats\""
-	chats=`osascript -e "$script"`
-
+################################################################################################################
+get_last_active_chat() 
+{
+	get_chats	
+	LAST_CHAT=`echo $CHATS | cut -d"," -f1`
+	LAST_CHAT=`echo $LAST_CHAT | cut -d";" -f1`
+	LAST_CHAT=`echo $LAST_CHAT | cut -d"$" -f2`
 }
+
 ################################################################################################################
 # skype_command()
 # {
@@ -27,18 +34,23 @@ get_chats() {
 # 	#
 # }
 
-
+################################################################################################################
 #Parameters
 TO=$1
 MESSAGE=$2
 
 # Sane input parameters
-# if ["$message" == ""]; then
-# 	read MESSAGE
-# fi
+if [[ "$TO" == "" ]]; then
+	get_last_active_chat
+	TO=`echo $LAST_CHAT`
+fi
 
-echo $(get_last_active_chat)
-# send_message "$TO" "$MESSAGE"
+if ["$MESSAGE" == ""]; then
+	read MESSAGE
+fi
+
+#send message 
+send_message "$TO" "$MESSAGE"
 
 exit 0
 

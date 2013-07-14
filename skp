@@ -36,8 +36,9 @@ get_last_active_chat()
 
 ################################################################################################################
 #Parameters
-TO=$1
-MESSAGE=$2
+MESSAGE=$1
+TO=$2
+
 
 # Sane input parameters
 if [[ "$TO" == "" ]]; then
@@ -46,7 +47,6 @@ if [[ "$TO" == "" ]]; then
 fi
 
 if ["$MESSAGE" == ""]; then
-	echo ">"
 	read MESSAGE
 fi
 
